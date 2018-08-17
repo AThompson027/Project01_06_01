@@ -1,48 +1,80 @@
  /*
-      Project 01_06_01
+        Project 01_06_01
 
-      Author: Annie Thompson
-      Date: 8-16-18
+        Author: Annie Thompson
+        Date: 8-16-18
 
-      Filename: script.js
-   */
+        Filename: script.js
+     */
 
-"use strict";
-// global variable
-var formValidity = true;
+ "use strict";
+ // global variable
+ var formValidity = true;
+
+ // function to validate all the required fields
+ function validateRequired() {
+     var inputFields = document.querySelectorAll("#contactInfo input");
+     var errorMessage = document.getElementById("errorText");
+     formValidity = false;
+     var fieldsetValidity = true;
+     var elementLength = inputFields.length;
+     var currentElement;
+
+     try {
+         for (var i = 0; i < elementLength; i++) {
+             currentElement = inputFields[i];
+             // for the blank fields
+             if (currentElement.value === "") {
+                 currentElement.style.background = "rgb(255,233,233)";
+                 fieldsetValidity = false;
+             } else {
+                 currentElement.style.background = "white";
+             }
+             if (fieldsetValidity === false) {
+                 throw "hi";
+             } else {
+                 errorMessage.style.display = "none"
+                 errorMessage.innerHTMl = "";
+             }
+         }
+     } catch (msg) {
+         errorMessage.style.display = "block";
+         errorMessage.innerHTML = msg;
+         formValidity = false;
+     }
+ }
 
 // function to prevent the form from submitted on default
-function validateForm(submit) {
-  if (submit.preventDefault) {
-        submit.preventDefault();
-    } else {
-        submit.returnValue = false;
-    }
-    formValidity = true;
+ function validateForm(submit) {
+     if (submit.preventDefault) {
+         submit.preventDefault();
+     } else {
+         submit.returnValue = false;
+     }
+     formValidity = true;
 
-    createEventListeners();
-    validateRequired();
-}
+     validateRequired();
+     
+     if (formValidity === true) {
+             alert("hey");
+         document.getElementsByTagName("form")[0].submit();
+         
+     }
+ }
 
-function validateRequired() {
-  var inputFields = document.querySelectorAll("#contactInfo" + "input");
-  var errorMessage = document.getElementById("errorText");
-  var fieldsetValidity = true
-}
+ // function to create event listeners for the form
+ function createEventListeners() {
+     var form = document.getElementsByTagName("form")[0];
+     if (form.addEventListener) {
+         form.addEventListener("submit", validateForm, false);
+     } else if (form.attachEvent) {
+         form.attachEvent("onsubmit", validateForm);
+     }
+ }
 
-// function to create event listeners for the form
-function createEventListeners() {
-  var form = document.getElementsByTagName("form")[0];
-  if (form.addEventListener) {
-      form.addEventListener("submit", validateForm, false);
-  } else if (form.attachEvent) {
-      form.attachEvent("onsubmit", validateForm);
-  }
-}
-
-// event listeners for window when it loads
-if (window.addEventListener) {
-    window.addEventListener("load", createEventListeners, false);
-} else if (window.attachEvent) {
-    window.attachEvent("onload", createEventListeners);
-}
+ // event listeners for window when it loads
+ if (window.addEventListener) {
+     window.addEventListener("load", createEventListeners, false);
+ } else if (window.attachEvent) {
+     window.attachEvent("onload", createEventListeners);
+ }
