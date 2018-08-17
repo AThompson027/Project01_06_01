@@ -21,6 +21,13 @@ function validateForm(submit) {
     formValidity = true;
 
     createEventListeners();
+    validateRequired();
+}
+
+function validateRequired() {
+  var inputFields = document.querySelectorAll("#contactInfo" + "input");
+  var errorMessage = document.getElementById("errorText");
+  var fieldsetValidity = true
 }
 
 // function to create event listeners for the form
