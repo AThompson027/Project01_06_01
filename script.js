@@ -13,11 +13,11 @@
 
  // function to validate all the required fields
  function validateRequired() {
-     var inputFields = document.querySelectorAll("#contactInfo input");
+     var inputFields = document.querySelectorAll("#contactinfo input");
      var errorMessage = document.getElementById("errorText");
-     formValidity = false;
      var fieldsetValidity = true;
      var elementLength = inputFields.length;
+     
      var currentElement;
 
      try {
@@ -29,14 +29,13 @@
                  fieldsetValidity = false;
              } else {
                  currentElement.style.background = "white";
+                 errorMessage.style.display = "none"
+             }
              }
              if (fieldsetValidity === false) {
-                 throw "hi";
-             } else {
-                 errorMessage.style.display = "none"
-                 errorMessage.innerHTMl = "";
+                 throw "Please complete your personal info.";
              }
-         }
+         
      } catch (msg) {
          errorMessage.style.display = "block";
          errorMessage.innerHTML = msg;
@@ -46,24 +45,24 @@
 
 // function to prevent the form from submitted on default
  function validateForm(submit) {
+     
      if (submit.preventDefault) {
          submit.preventDefault();
      } else {
          submit.returnValue = false;
      }
      formValidity = true;
-
      validateRequired();
-     
+
      if (formValidity === true) {
-             alert("hey");
+          
          document.getElementsByTagName("form")[0].submit();
-         
      }
  }
 
  // function to create event listeners for the form
  function createEventListeners() {
+    
      var form = document.getElementsByTagName("form")[0];
      if (form.addEventListener) {
          form.addEventListener("submit", validateForm, false);
